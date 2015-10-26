@@ -12,7 +12,9 @@ public class Create_Node_Sample {
             .sessionTimeoutMs(5000)
             .retryPolicy(new ExponentialBackoffRetry(1000, 3))
             .build();
-    public static void main(String[] args) throws Exception {
+
+    public static void main(String[] args) throws Exception
+    {
         client.start();
         client.create()
               .creatingParentsIfNeeded()

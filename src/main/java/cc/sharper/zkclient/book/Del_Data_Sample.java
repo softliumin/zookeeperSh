@@ -6,7 +6,8 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
 //使用Curator删除节点
-public class Del_Data_Sample {
+public class Del_Data_Sample
+{
 
     static String path = "/zk-book/c1";
     static CuratorFramework client = CuratorFrameworkFactory.builder()
@@ -14,7 +15,8 @@ public class Del_Data_Sample {
             .sessionTimeoutMs(5000)
             .retryPolicy(new ExponentialBackoffRetry(1000, 3))
             .build();
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
     	client.start();
         client.create()
               .creatingParentsIfNeeded()
