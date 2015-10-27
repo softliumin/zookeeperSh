@@ -1,4 +1,4 @@
-package cc.sharper.zkclient.book;
+package cc.sharper.Curator.book;
 import org.apache.curator.test.TestingCluster;
 import org.apache.curator.test.TestingZooKeeperServer;
 

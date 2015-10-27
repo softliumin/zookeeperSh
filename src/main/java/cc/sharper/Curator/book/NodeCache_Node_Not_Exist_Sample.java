@@ -1,4 +1,5 @@
-package cc.sharper.zkclient.book;
+package cc.sharper.Curator.book;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.NodeCache;
@@ -6,9 +7,9 @@ import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
-public class NodeCache_Sample {
+public class NodeCache_Node_Not_Exist_Sample {
 
-    static String path = "/zk-book/nodecache";
+    static String path = "/curator_nodecache_sample";
     static CuratorFramework client = CuratorFrameworkFactory.builder()
             .connectString("domain1.book.zookeeper:2181")
             .sessionTimeoutMs(5000)
@@ -17,10 +18,6 @@ public class NodeCache_Sample {
 	
 	public static void main(String[] args) throws Exception {
 		client.start();
-		client.create()
-		      .creatingParentsIfNeeded()
-		      .withMode(CreateMode.EPHEMERAL)
-		      .forPath(path, "init".getBytes());
 	    final NodeCache cache = new NodeCache(client,path,false);
 		cache.start(true);
 		cache.getListenable().addListener(new NodeCacheListener() {
@@ -30,9 +27,10 @@ public class NodeCache_Sample {
 			    new String(cache.getCurrentData().getData()));
 			}
 		});
-		client.setData().forPath( path, "u".getBytes() );
-		Thread.sleep( 1000 );
-		client.delete().deletingChildrenIfNeeded().forPath( path );
+		client.create()
+	      .creatingParentsIfNeeded()
+	      .withMode(CreateMode.EPHEMERAL)
+	      .forPath(path, "init".getBytes());
 		Thread.sleep( Integer.MAX_VALUE );
 	}
 }

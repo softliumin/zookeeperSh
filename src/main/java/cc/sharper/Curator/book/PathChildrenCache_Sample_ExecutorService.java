@@ -1,4 +1,7 @@
-package cc.sharper.zkclient.book;
+package cc.sharper.Curator.book;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
@@ -8,7 +11,7 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
-public class PathChildrenCache_Sample {
+public class PathChildrenCache_Sample_ExecutorService {
 
     static String path = "/zk-book";
     static CuratorFramework client = CuratorFrameworkFactory.builder()
@@ -16,16 +19,20 @@ public class PathChildrenCache_Sample {
             .retryPolicy(new ExponentialBackoffRetry(1000, 3))
             .sessionTimeoutMs(5000)
             .build();
+    static ExecutorService tp = Executors.newFixedThreadPool(2);
+    
 	public static void main(String[] args) throws Exception {
 		client.start();
-		PathChildrenCache cache = new PathChildrenCache(client, path, true);
-		cache.start(StartMode.POST_INITIALIZED_EVENT);
+		System.out.println( Thread.currentThread().getName() );
+		PathChildrenCache cache = new PathChildrenCache(client, path,true,false,tp);
+		cache.start(StartMode.NORMAL);
 		cache.getListenable().addListener(new PathChildrenCacheListener() {
 			public void childEvent(CuratorFramework client, 
 					               PathChildrenCacheEvent event) throws Exception {
 				switch (event.getType()) {
 				case CHILD_ADDED:
 					System.out.println("CHILD_ADDED," + event.getData().getPath());
+					System.out.println( "tname: " + Thread.currentThread().getName() );
 					break;
 				case CHILD_UPDATED:
 					System.out.println("CHILD_UPDATED," + event.getData().getPath());
@@ -38,6 +45,7 @@ public class PathChildrenCache_Sample {
 				}
 			}
 		});
+		Thread.sleep( 1000 );
 		client.create().withMode(CreateMode.PERSISTENT).forPath(path);
 		Thread.sleep( 1000 );
 		client.create().withMode(CreateMode.PERSISTENT).forPath(path+"/c1");
@@ -48,3 +56,5 @@ public class PathChildrenCache_Sample {
 		Thread.sleep(Integer.MAX_VALUE);
 	}
 }
+
+

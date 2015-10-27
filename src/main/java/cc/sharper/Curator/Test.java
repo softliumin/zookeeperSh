@@ -1,4 +1,4 @@
-package cc.sharper.zkclient;
+package cc.sharper.Curator;
 
 /**
  * Created by sharper on 2015/10/27.
