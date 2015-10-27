@@ -30,17 +30,23 @@ public class SetData_API_ASync_Usage implements Watcher {
     	Thread.sleep( Integer.MAX_VALUE );
     }
     //@Override
-    public void process(WatchedEvent event) {
-        if (KeeperState.SyncConnected == event.getState()) {
-            if (EventType.None == event.getType() && null == event.getPath()) {
+    public void process(WatchedEvent event)
+    {
+        if (KeeperState.SyncConnected == event.getState())
+        {
+            if (EventType.None == event.getType() && null == event.getPath())
+            {
                 connectedSemaphore.countDown();
             }
         }
     }
 }
-class IStatCallback implements AsyncCallback.StatCallback{
-	public void processResult(int rc, String path, Object ctx, Stat stat) {
-        if (rc == 0) {
+class IStatCallback implements AsyncCallback.StatCallback
+{
+	public void processResult(int rc, String path, Object ctx, Stat stat)
+    {
+        if (rc == 0)
+        {
             System.out.println("SUCCESS");
         }
     }

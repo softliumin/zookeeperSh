@@ -9,11 +9,13 @@ import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.ZooKeeper;
 
 // ZooKeeper API 删除节点，使用同步(sync)接口。
-public class Exist_API_Sync_Usage implements Watcher {
+public class Exist_API_Sync_Usage implements Watcher
+{
 
     private static CountDownLatch connectedSemaphore = new CountDownLatch(1);
     private static ZooKeeper zk;
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
 
     	String path = "/zk-book";
     	zk = new ZooKeeper("domain1.book.zookeeper:2181", 
@@ -37,18 +39,25 @@ public class Exist_API_Sync_Usage implements Watcher {
     }
 
    // @Override
-    public void process(WatchedEvent event) {
-        try {
-            if (KeeperState.SyncConnected == event.getState()) {
-                if (EventType.None == event.getType() && null == event.getPath()) {
+    public void process(WatchedEvent event)
+    {
+        try
+        {
+            if (KeeperState.SyncConnected == event.getState())
+            {
+                if (EventType.None == event.getType() && null == event.getPath())
+                {
                     connectedSemaphore.countDown();
-                } else if (EventType.NodeCreated == event.getType()) {
+                } else if (EventType.NodeCreated == event.getType())
+                {
                     System.out.println("Node(" + event.getPath() + ")Created");
                     zk.exists( event.getPath(), true );
-                } else if (EventType.NodeDeleted == event.getType()) {
+                } else if (EventType.NodeDeleted == event.getType())
+                {
                     System.out.println("Node(" + event.getPath() + ")Deleted");
                     zk.exists( event.getPath(), true );
-                } else if (EventType.NodeDataChanged == event.getType()) {
+                } else if (EventType.NodeDataChanged == event.getType())
+                {
                     System.out.println("Node(" + event.getPath() + ")DataChanged");
                     zk.exists( event.getPath(), true );
                 }
