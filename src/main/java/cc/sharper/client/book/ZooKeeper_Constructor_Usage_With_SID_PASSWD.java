@@ -38,4 +38,12 @@ public class ZooKeeper_Constructor_Usage_With_SID_PASSWD implements Watcher {
             connectedSemaphore.countDown();
         }
     }
+    /**
+     * 输出如下
+     *  Receive watched event：WatchedEvent state:SyncConnected type:None path:null
+        Receive watched event：WatchedEvent state:Expired type:None path:null
+        Receive watched event：WatchedEvent state:SyncConnected type:None path:null
+     */
 }
+
+
