@@ -16,14 +16,12 @@ public class Test
     {
         //创建节点
         ZkClient zk = new ZkClient("sharper.cc",3000);
-//
 //        String path = "/study001/haha";
 //        zk.createPersistent(path,true);//可以递归创建
 //        zk.create("/study001/haha/haha01","111", CreateMode.PERSISTENT);
 //        zk.create("/study001/haha/haha02","222", CreateMode.PERSISTENT);
 //        zk.create("/study001/haha/haha03","333", CreateMode.PERSISTENT);
 //        zk.create("/study001/haha/haha04","444", CreateMode.PERSISTENT);
-
 
         //删除节点
         //zk.delete("/study001/haha/haha01");
