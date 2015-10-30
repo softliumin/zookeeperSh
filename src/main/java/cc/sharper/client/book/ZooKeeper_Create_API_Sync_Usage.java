@@ -15,9 +15,13 @@ public class ZooKeeper_Create_API_Sync_Usage implements Watcher
 
     private static CountDownLatch connectedSemaphore = new CountDownLatch(1);
 
+
     public static void main(String[] args) throws Exception
     {
+
         ZooKeeper zookeeper = new ZooKeeper("domain1.book.zookeeper:2181",5000,new ZooKeeper_Create_API_Sync_Usage());
+
+        //同步的步骤（一）
         connectedSemaphore.await();
 
        // String create(String path, byte[] data, List<ACL> acl, CreateMode createMode)
@@ -36,11 +40,12 @@ public class ZooKeeper_Create_API_Sync_Usage implements Watcher
 //        Success create znode: /zk-test-ephemeral-0000000004
     }
 
+    //实现process方法
     public void process(WatchedEvent event)
     {
         if (KeeperState.SyncConnected == event.getState())
         {
-            connectedSemaphore.countDown();
+            connectedSemaphore.countDown();//同步的步骤（二）
         }
     }
 }

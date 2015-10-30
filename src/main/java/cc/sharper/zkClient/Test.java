@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by liumin3 on 2015/10/27.
  * ZkClient 没什么玩的，但是有些api可以深究一下！
+ * ZkClient 提供的方法比较少，不好玩！
  */
 public class Test
 {
